@@ -1,0 +1,138 @@
+version: '3'
+services:
+  redis-cli:
+    image: goodsmileduck/redis-cli:latest
+    container_name: redis-cli
+    restart: always
+    volumes:
+      - ./redis-cluster.sh:/redis-cluster.sh:ro
+    tty: true
+    networks:
+      - redis-cluter
+    
+  redis-node-1: 
+    image: redis:${REDIS_VERSION}
+    container_name: redis-node-1
+    restart: always
+    environment: 
+      TZ : ${TZ}
+    volumes:
+      - ${REDIS_CONF_DIR}:/config/:ro
+      - ${REDIS_DATA_DIR}:/data/:rw
+      - ${REDIS_LOG_DIR}:/var/log/redis/:rw
+    ports:
+      - "${REDIS_NODE_1_PORT}:6381"
+      - "${REDIS_NODE_1_CLUSTER_PORT}:16381"
+    command:
+      redis-server /config/redis_${REDIS_NODE_1_PORT}.conf
+    tty: true
+    networks:
+      redis-cluter:
+          ipv4_address: ${REDIS_NODE_1_IP}
+
+  redis-node-2: 
+    image: redis:${REDIS_VERSION}
+    container_name: redis-node-2
+    restart: always
+    environment: 
+      TZ : ${TZ}
+    volumes:
+      - ${REDIS_CONF_DIR}:/config/:ro
+      - ${REDIS_DATA_DIR}:/data/:rw
+      - ${REDIS_LOG_DIR}:/var/log/redis/:rw
+    ports:
+      - "${REDIS_NODE_2_PORT}:6382"
+      - "${REDIS_NODE_2_CLUSTER_PORT}:16382"
+    command:
+      redis-server /config/redis_${REDIS_NODE_2_PORT}.conf
+    tty: true
+    networks:
+      redis-cluter:
+          ipv4_address: ${REDIS_NODE_2_IP}
+
+  redis-node-3: 
+    image: redis:${REDIS_VERSION}
+    container_name: redis-node-3
+    restart: always
+    environment: 
+      TZ : ${TZ}
+    volumes:
+      - ${REDIS_CONF_DIR}:/config/:ro
+      - ${REDIS_DATA_DIR}:/data/:rw
+      - ${REDIS_LOG_DIR}:/var/log/redis/:rw
+    ports:
+      - "${REDIS_NODE_3_PORT}:6383"
+      - "${REDIS_NODE_3_CLUSTER_PORT}:16383"
+    command:
+      redis-server /config/redis_${REDIS_NODE_3_PORT}.conf
+    tty: true
+    networks:
+      redis-cluter:
+          ipv4_address: ${REDIS_NODE_3_IP}
+
+  redis-node-4: 
+    image: redis:${REDIS_VERSION}
+    container_name: redis-node-4
+    restart: always
+    environment: 
+      TZ : ${TZ}
+    volumes:
+      - ${REDIS_CONF_DIR}:/config/:ro
+      - ${REDIS_DATA_DIR}:/data/:rw
+      - ${REDIS_LOG_DIR}:/var/log/redis/:rw
+    ports:
+      - "${REDIS_NODE_4_PORT}:6384"
+      - "${REDIS_NODE_4_CLUSTER_PORT}:16384"
+    command:
+      redis-server /config/redis_${REDIS_NODE_4_PORT}.conf
+    tty: true
+    networks:
+      redis-cluter:
+          ipv4_address: ${REDIS_NODE_4_IP}
+
+  redis-node-5: 
+    image: redis:${REDIS_VERSION}
+    container_name: redis-node-5
+    restart: always
+    environment: 
+      TZ : ${TZ}
+    volumes:
+      - ${REDIS_CONF_DIR}:/config/:ro
+      - ${REDIS_DATA_DIR}:/data/:rw
+      - ${REDIS_LOG_DIR}:/var/log/redis/:rw
+    ports:
+      - "${REDIS_NODE_5_PORT}:6385"
+      - "${REDIS_NODE_5_CLUSTER_PORT}:16385"
+    command:
+      redis-server /config/redis_${REDIS_NODE_5_PORT}.conf
+    tty: true
+    networks:
+      redis-cluter:
+          ipv4_address: ${REDIS_NODE_5_IP}
+
+  redis-node-6: 
+    image: redis:${REDIS_VERSION}
+    container_name: redis-node-6
+    restart: always
+    environment: 
+      TZ : ${TZ}
+    volumes:
+      - ${REDIS_CONF_DIR}:/config/:ro
+      - ${REDIS_DATA_DIR}:/data/:rw
+      - ${REDIS_LOG_DIR}:/var/log/redis/:rw
+    ports:
+      - "${REDIS_NODE_6_PORT}:6386"
+      - "${REDIS_NODE_6_CLUSTER_PORT}:16386"
+    command:
+      redis-server /config/redis_${REDIS_NODE_6_PORT}.conf
+    tty: true
+    networks:
+      redis-cluter:
+          ipv4_address: ${REDIS_NODE_6_IP}
+
+networks:
+  redis-cluter:
+    driver: bridge
+    ipam:
+       config:
+        - subnet: ${SUBNET}
