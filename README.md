@@ -34,8 +34,16 @@
 
 注意
 ----
-若想加入已有的 docker network , 编辑文件 docker-compose.yml
 
+集群密码为 `admin`, 更改密码则需修改 config 目录下所有配置文件
+```
+masterauth admin
+和
+requirepass admin
+```
+
+
+若想加入已有的 docker network , 编辑文件 docker-compose.yml
 
 ```
 networks:
